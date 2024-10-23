@@ -58,7 +58,7 @@ if __name__ == "__main__":
     classifier = train_evaluate_model(X_train, y_train, X_test, y_test)
 
     # Save the trained model as a pickle file
-    filename = 'diabetes-prediction-rfc-model.pkl'
+    filename = 'diabetes_predictor_model.pkl'
     with open(filename, 'wb') as model_file:
         pickle.dump(classifier, model_file)
 
