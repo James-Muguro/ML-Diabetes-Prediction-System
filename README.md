@@ -4,13 +4,11 @@
 
 - [Overview](#overview)
 - [Motivation](#motivation)
-- [Demo](#demo)
 - [Learning Objectives](#learning-objectives)
 - [Technical Aspects](#technical-aspects)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Run the Application](#run-the-application)
-- [Bug / Feature Request](#bug--feature-request)
 - [Future Work and Enhancements](#future-work-and-enhancements)
 
 ## Overview
@@ -31,10 +29,6 @@ The goal is to offer a web-based interface for users to input their health data 
 ## Motivation
 
 Diabetes is a significant and growing health concern, exacerbated by modern sedentary lifestyles. Early detection is crucial for effective management and prevention of complications. This project seeks to harness machine learning technology to enable early detection of diabetes, thereby potentially improving health outcomes for individuals. By creating a user-friendly application, we aim to make predictive healthcare more accessible.
-
-## Demo
-
-You can explore a live demonstration of the application [here](https://mldiabete.herokuapp.com/).
 
 ## Learning Objectives
 
@@ -83,10 +77,6 @@ python app.py
 ```
 
 This will start the Flask development server, and you can access the application in your web browser at `http://127.0.0.1:5000/`.
-
-## Bug / Feature Request
-
-If you encounter any issues or have feature requests, please report them by opening an issue [here](https://github.com/ditikrushna/End-to-End-Diabetes-Prediction-Application-Using-Machine-Learning/issues).
 
 ## Future Work and Enhancements
 
