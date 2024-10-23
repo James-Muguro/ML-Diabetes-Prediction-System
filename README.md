@@ -57,42 +57,22 @@ This project aims to provide practical experience with the following concepts:
 
 ## Technologies Used
 
-![Made with Python](https://forthebadge.com/images/badges/made-with-python.svg)
-
-[![Scikit-Learn](https://github.com/scikit-learn/scikit-learn/blob/master/doc/logos/scikit-learn-logo-small.png)](https://github.com/scikit-learn/)
-[![Flask](https://flask.palletsprojects.com/en/1.1.x/_images/flask-logo.png)](https://flask.palletsprojects.com/)
-![Heroku](https://github.com/ditikrushna/End-to-End-Diabetes-Prediction-Application-Using-Machine-Learning/blob/master/Resource/heroku.png)
-![NumPy](https://github.com/ditikrushna/End-to-End-Diabetes-Prediction-Application-Using-Machine-Learning/blob/master/Resource/numpy.png)
-![Pandas](https://github.com/ditikrushna/End-to-End-Diabetes-Prediction-Application-Using-Machine-Learning/blob/master/Resource/pandas.jpeg)
+- **Machine Learning**: Scikit-Learn (Random Forest Classifier)
+- **Web Framework**: Flask (lightweight web app framework)
+- **Data Libraries**: NumPy (numerical data handling), Pandas (data manipulation)
+- **Deployment**: Heroku (cloud platform for deployment)
+- **Programming Language**: Python
+- **Visualization**: Matplotlib (data visualization)
 
 ## Installation
 
-To set up the project locally, follow these steps:
+- **Clone the Repository**: Download the project files to your local machine.
 
-1. Clone this repository:
+- **Navigate to the Project Directory**: Use your terminal or command prompt to change into the project folder.
 
-   ```bash
-   git clone <repository-url>
-   ```
+- **Set Up a Virtual Environment**: Create a new virtual environment to manage dependencies separately. Activate it to ensure you’re working within this environment.
 
-2. Navigate to the project directory:
-
-   ```bash
-   cd ML-Diabetes-Prediction-System
-   ```
-
-3. Create a virtual environment with Python 3 and activate it:
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-
-4. Install the required packages:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **Install Dependencies**: Use a package manager to install the required libraries listed in the requirements.txt file.
 
 ## Run the Application
 
