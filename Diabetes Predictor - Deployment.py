@@ -2,51 +2,64 @@
 import numpy as np
 import pandas as pd
 import pickle
+import warnings
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
-# Loading the dataset
-df = pd.read_csv('kaggle_diabetes.csv')
+# Suppress any warnings
+warnings.filterwarnings("ignore")
 
-# Renaming DiabetesPedigreeFunction as DPF
-df.rename(columns={'DiabetesPedigreeFunction': 'DPF'}, inplace=True)
+# Function to handle missing values imputation
+def impute_missing_values(df, columns):
+    df['Glucose'].fillna(df['Glucose'].mean(), inplace=True)
+    df['BloodPressure'].fillna(df['BloodPressure'].mean(), inplace=True)
+    df['SkinThickness'].fillna(df['SkinThickness'].median(), inplace=True)
+    df['Insulin'].fillna(df['Insulin'].median(), inplace=True)
+    df['BMI'].fillna(df['BMI'].median(), inplace=True)
+    return df
 
-# Replacing the 0 values from ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI'] with NaN
-df[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']] = df[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].replace(0, np.NaN)
+# Function to train and evaluate the RandomForest model
+def train_evaluate_model(X_train, y_train, X_test, y_test):
+    classifier = RandomForestClassifier(n_estimators=100, random_state=0)
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
 
-# Splitting the dataset into features and target variable
-X = df.drop(columns='Outcome')
-y = df['Outcome']
+    print("Model Accuracy:", accuracy_score(y_test, y_pred))
+    print("Classification Report:\n", classification_report(y_test, y_pred))
+    print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+    
+    return classifier
 
-# Splitting the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
+# Main script
+if __name__ == "__main__":
+    # Loading the dataset
+    df = pd.read_csv('kaggle_diabetes.csv')
 
-# Imputing missing values after splitting
-X_train['Glucose'].fillna(X_train['Glucose'].mean(), inplace=True)
-X_train['BloodPressure'].fillna(X_train['BloodPressure'].mean(), inplace=True)
-X_train['SkinThickness'].fillna(X_train['SkinThickness'].median(), inplace=True)
-X_train['Insulin'].fillna(X_train['Insulin'].median(), inplace=True)
-X_train['BMI'].fillna(X_train['BMI'].median(), inplace=True)
+    # Renaming 'DiabetesPedigreeFunction' as 'DPF'
+    df.rename(columns={'DiabetesPedigreeFunction': 'DPF'}, inplace=True)
 
-X_test['Glucose'].fillna(X_train['Glucose'].mean(), inplace=True)  # Use the training set mean
-X_test['BloodPressure'].fillna(X_train['BloodPressure'].mean(), inplace=True)
-X_test['SkinThickness'].fillna(X_train['SkinThickness'].median(), inplace=True)
-X_test['Insulin'].fillna(X_train['Insulin'].median(), inplace=True)
-X_test['BMI'].fillna(X_train['BMI'].median(), inplace=True)
+    # Replace 0 values with NaN for specific columns
+    columns_to_impute = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
+    df[columns_to_impute] = df[columns_to_impute].replace(0, np.NaN)
 
-# Creating Random Forest Model
-classifier = RandomForestClassifier(n_estimators=100, random_state=0)  # Increased n_estimators for potentially better performance
-classifier.fit(X_train, y_train)
+    # Splitting the dataset into features and target variable
+    X = df.drop(columns='Outcome')
+    y = df['Outcome']
 
-# Predicting on the test set
-y_pred = classifier.predict(X_test)
+    # Splitting the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
-# Evaluating the model
-print("Model Accuracy:", accuracy_score(y_test, y_pred))
-print(classification_report(y_test, y_pred))
+    # Impute missing values for both train and test sets
+    X_train = impute_missing_values(X_train, columns_to_impute)
+    X_test = impute_missing_values(X_test, columns_to_impute)
 
-# Creating a pickle file for the classifier
-filename = 'diabetes-prediction-rfc-model.pkl'
-with open(filename, 'wb') as model_file:
-    pickle.dump(classifier, model_file)
+    # Train and evaluate the model
+    classifier = train_evaluate_model(X_train, y_train, X_test, y_test)
+
+    # Save the trained model as a pickle file
+    filename = 'diabetes-prediction-rfc-model.pkl'
+    with open(filename, 'wb') as model_file:
+        pickle.dump(classifier, model_file)
+
+    print(f"Model saved as {filename}")
